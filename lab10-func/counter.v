@@ -15,8 +15,33 @@ module counter
 //////////////////////////////////////////////////////////////////////////////
 //TO DO: DEFINE THE COUNTER COMBINATIONAL LOGIC using FUNCTION AS INSTRUCTED//
 //////////////////////////////////////////////////////////////////////////////
+function [WIDTH-1:0] cnt_func;
+input rst, load, enab;
+input [WIDTH-1:0] cnt_in;
+input [WIDTH-1:0] cnt_out;
 
+integer cont;
+if (rst) begin
+         cont <= {WIDTH{1'b0}};
+         cnt_func <= cont; //reseta o valor de saida
+    end
+    else begin
+        if (enab) begin
+            if (load) begin
+                cont <= cnt_in;
+                cnt_func <= cont;
+            end
+            else begin
+                cont <= cont + 1;
+                cnt_func <= cont;
+            end
+        end
+        else begin
+            cnt_func <= 0;
+        end
+    end
+endfunction
   always @(posedge clk)
-     cnt_out <= cnt_func (rst, load, enab ,cnt_in, cnt_out); //function call
+     cnt_out <= cnt_func (rst, load, enab,cnt_in, cnt_out); //function call
 
 endmodule
